@@ -40,7 +40,12 @@ export const fetchGuides = createAsyncThunk<
     if (response.error) {
       return rejectWithValue(response.error);
     }
-    return response.data as Guide[];
+    const list = Array.isArray((response.data as any)?.guides)
+      ? (response.data as any).guides
+      : (response.data as any);
+    const normalized = list.map((g: any) => ({ ...g, audience: (g.audience || "").toLowerCase() }));
+    console.log("[GUIDES] list extracted", normalized);
+    return normalized as Guide[];
   } catch (error) {
     return rejectWithValue("Failed to fetch guides");
   }

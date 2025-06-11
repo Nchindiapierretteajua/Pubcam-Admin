@@ -77,7 +77,8 @@ export const authApi = {
 export const examsApi = {
   getAll: async () => {
     try {
-      const response = await api.get("/api/admin/exams");
+      const response = await api.get("/api/exams");
+      console.log("[EXAMS API] getAll", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -85,7 +86,8 @@ export const examsApi = {
   },
   create: async (examData: any) => {
     try {
-      const response = await api.post("/api/admin/exams", examData);
+      const response = await api.post("/api/exams", examData);
+      console.log("[EXAMS API] create", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -93,7 +95,8 @@ export const examsApi = {
   },
   update: async (id: string, examData: any) => {
     try {
-      const response = await api.put(`/api/admin/exams/${id}`, examData);
+      const response = await api.put(`/api/exams/${id}`, examData);
+      console.log("[EXAMS API] update", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -101,7 +104,8 @@ export const examsApi = {
   },
   delete: async (id: string) => {
     try {
-      const response = await api.delete(`/api/admin/exams/${id}`);
+      const response = await api.delete(`/api/exams/${id}`);
+      console.log("[EXAMS API] delete", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -113,7 +117,8 @@ export const examsApi = {
 export const scholarshipsApi = {
   getAll: async () => {
     try {
-      const response = await api.get("/api/admin/scholarships");
+      const response = await api.get("/api/scholarships");
+      console.log("[SCHOLARSHIPS API] getAll", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -121,10 +126,8 @@ export const scholarshipsApi = {
   },
   create: async (scholarshipData: any) => {
     try {
-      const response = await api.post(
-        "/api/admin/scholarships",
-        scholarshipData
-      );
+      const response = await api.post("/api/scholarships", scholarshipData);
+      console.log("[SCHOLARSHIPS API] create", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -132,10 +135,8 @@ export const scholarshipsApi = {
   },
   update: async (id: string, scholarshipData: any) => {
     try {
-      const response = await api.put(
-        `/api/admin/scholarships/${id}`,
-        scholarshipData
-      );
+      const response = await api.put(`/api/scholarships/${id}`, scholarshipData);
+      console.log("[SCHOLARSHIPS API] update", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -143,7 +144,8 @@ export const scholarshipsApi = {
   },
   delete: async (id: string) => {
     try {
-      const response = await api.delete(`/api/admin/scholarships/${id}`);
+      const response = await api.delete(`/api/scholarships/${id}`);
+      console.log("[SCHOLARSHIPS API] delete", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -155,7 +157,8 @@ export const scholarshipsApi = {
 export const guidesApi = {
   getAll: async () => {
     try {
-      const response = await api.get("/api/admin/guides");
+      const response = await api.get("/api/guides");
+      console.log("[GUIDES API] getAll", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -163,7 +166,8 @@ export const guidesApi = {
   },
   create: async (guideData: any) => {
     try {
-      const response = await api.post("/api/admin/guides", guideData);
+      const response = await api.post("/api/guides", guideData);
+      console.log("[GUIDES API] create", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -171,7 +175,8 @@ export const guidesApi = {
   },
   update: async (id: string, guideData: any) => {
     try {
-      const response = await api.put(`/api/admin/guides/${id}`, guideData);
+      const response = await api.put(`/api/guides/${id}`, guideData);
+      console.log("[GUIDES API] update", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -179,7 +184,8 @@ export const guidesApi = {
   },
   delete: async (id: string) => {
     try {
-      const response = await api.delete(`/api/admin/guides/${id}`);
+      const response = await api.delete(`/api/guides/${id}`);
+      console.log("[GUIDES API] delete", response.data);
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };
@@ -191,7 +197,7 @@ export const guidesApi = {
 export const dashboardApi = {
   getOverview: async () => {
     try {
-      const response = await api.get("/api/admin/dashboard/overview");
+      const response = await api.get("/api/admin/dashboard");
       return { data: response.data };
     } catch (error: any) {
       return { data: null, error: error.message };

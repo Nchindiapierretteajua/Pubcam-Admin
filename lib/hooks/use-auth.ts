@@ -7,7 +7,7 @@ export const useAuth = () => {
   const { token, isAuthenticated, loading, error } = useSelector((state: RootState) => state.auth)
 
   const loginUser = async (username: string, password: string) => {
-    return dispatch(login({ username, password }))
+    return dispatch(login({ username, password })).unwrap()
   }
 
   const logoutUser = () => {

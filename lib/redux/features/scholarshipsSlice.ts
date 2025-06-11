@@ -38,7 +38,11 @@ export const fetchScholarships = createAsyncThunk<
     if (response.error) {
       return rejectWithValue(response.error);
     }
-    return response.data as Scholarship[];
+    const list = Array.isArray((response.data as any)?.scholarships)
+      ? (response.data as any).scholarships
+      : (response.data as any);
+    console.log("[SCHOLARSHIPS] list extracted", list);
+    return list as Scholarship[];
   } catch (error) {
     return rejectWithValue("Failed to fetch scholarships");
   }

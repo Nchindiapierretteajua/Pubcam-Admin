@@ -38,7 +38,11 @@ export const login = createAsyncThunk(
         return rejectWithValue("No token received from server");
       }
 
-      localStorage.setItem("token", token);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("token", token);
+        // Also store as cookie so middleware can detect authentication
+        document.cookie = `adminToken=${token}; path=/`;
+      }
       return token;
     } catch (error) {
       if (error instanceof Error) {
@@ -55,7 +59,11 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   } catch (error) {
     console.error("Logout error:", error);
   } finally {
-    localStorage.removeItem("token");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("token");
+      // Clear auth cookie
+      document.cookie = "adminToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
   }
   return null;
 });

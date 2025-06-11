@@ -38,9 +38,12 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginFormValues) => {
-    const success = await login(data.username, data.password);
-    if (success) {
+    try {
+      await login(data.username, data.password);
       router.push("/dashboard");
+    } catch (err) {
+      // login thunk rejected; error handled via slice
+      console.error("Login failed", err);
     }
   };
 
@@ -60,8 +63,7 @@ export default function LoginPage() {
             Access the PubCam admin panel
           </CardDescription>
         </CardHeader>
-        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-        <form onSubmit={() => router.push("/dashboard")}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             {error && (
               <Alert variant="destructive" className="text-destructive">

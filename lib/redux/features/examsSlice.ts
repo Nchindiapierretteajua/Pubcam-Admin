@@ -43,7 +43,10 @@ export const fetchExams = createAsyncThunk<
     if (response.error) {
       return rejectWithValue(response.error);
     }
-    return response.data as Exam[];
+    const list = Array.isArray((response.data as any)?.exams) ? (response.data as any).exams : (response.data as any);
+    const normalized = list.map((e: any) => ({ ...e, level: (e.level || "").toLowerCase() }));
+    console.log("[EXAMS] list extracted", normalized);
+    return normalized as Exam[];
   } catch (error) {
     return rejectWithValue("Failed to fetch exams");
   }

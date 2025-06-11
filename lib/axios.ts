@@ -15,10 +15,11 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      typeof window !== "undefined" ? (localStorage.getItem("token") || localStorage.getItem("adminToken")) : null;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    console.log("[API REQUEST]", config.method?.toUpperCase(), config.url, config.data || "");
     return config;
   },
   (error) => {
@@ -28,9 +29,13 @@ api.interceptors.request.use(
 
 // Add response interceptor to handle common errors
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    console.log("[API RESPONSE]", response.config.url, response.status, response.data);
+    return response;
+  },
   (error) => {
     if (error.response) {
+      console.error("[API ERROR]", error.response.config.url, error.response.status, error.response.data);
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
       const { status, data } = error.response;
@@ -40,6 +45,7 @@ api.interceptors.response.use(
           // Handle unauthorized - clear token and redirect to login
           if (typeof window !== "undefined") {
             localStorage.removeItem("token");
+            localStorage.removeItem("adminToken");
             window.location.href = "/login";
           }
           break;
