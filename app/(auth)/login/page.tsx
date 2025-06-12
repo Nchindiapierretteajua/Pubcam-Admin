@@ -71,18 +71,6 @@ export default function LoginPage() {
               </Alert>
             )}
 
-            {/* Demo credentials info */}
-            <div className="rounded-lg bg-muted p-3 text-sm">
-              <p className="font-medium mb-1">Demo Credentials:</p>
-              <p className="text-xs text-muted-foreground">admin / admin123</p>
-              <p className="text-xs text-muted-foreground">
-                pubcam / cameroon2024
-              </p>
-              <p className="text-xs text-muted-foreground">
-                minesec / education
-              </p>
-            </div>
-
             <div className="space-y-2">
               <Label htmlFor="username">Username</Label>
               <Input

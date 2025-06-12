@@ -18,7 +18,7 @@ interface Exam {
   resultDate?: string;
   organizingBody: string;
   imageUrl?: string;
-  level: "primary" | "secondary" | "tertiary";
+  level: "PRIMARY" | "SECONDARY" | "TERTIARY";
 }
 
 interface ExamsState {
@@ -43,8 +43,16 @@ export const fetchExams = createAsyncThunk<
     if (response.error) {
       return rejectWithValue(response.error);
     }
-    const list = Array.isArray((response.data as any)?.exams) ? (response.data as any).exams : (response.data as any);
-    const normalized = list.map((e: any) => ({ ...e, level: (e.level || "").toLowerCase() }));
+    const list = Array.isArray((response.data as any)?.exams)
+      ? (response.data as any).exams
+      : (response.data as any);
+    const normalized = list.map((e: any) => ({
+      ...e,
+      level: (e.level || "").toUpperCase(),
+      resultDate: e.resultDate
+        ? new Date(e.resultDate).toISOString().split("T")[0]
+        : undefined,
+    }));
     console.log("[EXAMS] list extracted", normalized);
     return normalized as Exam[];
   } catch (error) {
@@ -56,7 +64,14 @@ export const createExam = createAsyncThunk<Exam, Exam, { rejectValue: string }>(
   "exams/create",
   async (examData: Exam, { rejectWithValue }) => {
     try {
-      const response = await examsApi.create(examData);
+      const formattedData = {
+        ...examData,
+        level: examData.level.toUpperCase(),
+        resultDate: examData.resultDate
+          ? new Date(examData.resultDate).toISOString().split("T")[0]
+          : undefined,
+      };
+      const response = await examsApi.create(formattedData);
       if (response.error) {
         return rejectWithValue(response.error);
       }
@@ -73,7 +88,14 @@ export const updateExam = createAsyncThunk<
   { rejectValue: string }
 >("exams/update", async ({ id, examData }, { rejectWithValue }) => {
   try {
-    const response = await examsApi.update(id, examData);
+    const formattedData = {
+      ...examData,
+      level: examData.level.toUpperCase(),
+      resultDate: examData.resultDate
+        ? new Date(examData.resultDate).toISOString().split("T")[0]
+        : undefined,
+    };
+    const response = await examsApi.update(id, formattedData);
     if (response.error) {
       return rejectWithValue(response.error);
     }
